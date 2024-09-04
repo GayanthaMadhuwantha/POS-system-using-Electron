@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+body::-webkit-scrollbar{
+  display: none;
+}
+.background-container {
+  z-index: 1; /* Ensure content is above the pseudo-element */
+}
+
+.background-container::-webkit-scrollbar{
+  display: none;
+}
+
+.background-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('steptodown.com914449.jpg');
+  background-size: cover;
+  background-position:top;
+  filter: blur(2px) brightness(0.93); /* Example filters */
+  z-index: -1; /* Ensure the pseudo-element is behind the content */
+  opacity: 0.8;
+}
+
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 60px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  border-top-right-radius: 20px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+  padding: 15px;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size:50px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding-left: 10px;
+  padding-right: 5px;
+  max-height: 100%;
+  
+}
+#main::-webkit-scrollbar{
+  display: none;
+}
+.menu-grid {
+  max-height:500px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(153px, .1fr));
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.menu-grid::-webkit-scrollbar{
+  display: none;
+}
+
+.menu-item {
+  padding: 17px;
+  background-color: #50c2f7;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  height: 40px;
+  user-select: none;
+  
+}
+
+.menu-item:hover {
+  background-color: #e0e0e0;
+}
+#order-list{
+  font-size: 16px;
+  font-weight: bold;
+
+}
+.sysitem{
+  font-size: 16px;
+  font-weight: bold;
+  width: 210px;
+  height: 50px;
+  background-color: #000000;
+  color: white;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+
+}
+button[type=submit],.supplier{
+  font-size: 14px;
+  font-weight: bold;
+  width: 170px;
+  height: 40px;
+  background-color: #000000;
+  color: white;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+
+}
+select:focus {
+  border: 2px solid #555;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.overlay-content {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  min-width: 400px;
+}
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#add-food-form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto; 
+}
+
+.form-group {
+  display: flex;
+flex-direction: row;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  flex-basis: 30%;
+  text-align: left;
+  padding-right: 10px;
+  margin-top: 7px;
+}
+
+.form-group select,.form-group input {
+  border-radius: 50px;
+  padding: 10px;
+  width: 400px;
+  border: 2px solid rgb(180, 178, 178);
+  outline: none;
+  font-size: 14px;
+}
+
+button[type="submit"] {
+  align-self: flex-end;
+  padding: 7px 15px;
+}
+label{
+  font-weight: bold;
+}
+#dash {
+  display: flex;
+  justify-content: space-between;
+}
+
+#left-side {
+  flex: 2; /* Allocates more space for the food items */
+  padding: 20px;
+  overflow-y: auto;
+}
+
+#right-side {
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  width: 400px;
+}
+
+
+.order-summary {
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  height: 400px;
+  margin-top: -15%;
+}
+
+.keypad {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.keypad button {
+  padding: 8px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+.keypad button:focus{
+  background-color: #a8a6a6;
+}
+
+.total {
+  font-size: 1.4em;
+  text-align: right;
+  margin-top: 20px;
+  font-weight: bold;
+  user-select: none;
+}
+
+.cash-input{
+  margin-top: 16px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4em;
+
+}
+
+.cash-input input{
+  border-radius: 50px;
+  padding: 10px 20px;
+  outline: none;
+  border: 2px solid rgb(165, 163, 163);
+  font-size: 20px;
+  user-select: none;
+}
+input:focus{
+  border: 2px solid rgb(0, 0, 0);
+}
+
+.change{
+  margin-top: 16px;
+  text-align :right;
+  font-size: 1.4em;
+  font-weight: bold;
+  user-select: none;
+}
+
+.complete-order-btn {
+  margin-top: 20px;
+  padding: 13px;
+  width: 100%;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2em;
+  cursor: pointer;
+  font-weight: bold;
+}
+.sysman:focus,select:focus{
+  border: 2px solid rgb(0, 0, 0);
+}
+
+#order-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: transparent;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+.order-item .item-name {
+    flex-grow: 1;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.order-item .item-quantity {
+    width: 50px;
+    padding: 8px 15px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+.order-item .remove-item-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.order-item .remove-item-btn:hover {
+    background-color: #e60000;
+}
+
+.order-item .item-price {
+    flex-grow: 0;
+    font-size: 14px;
+    margin-right: 15px;
+}
+.scrolllist{
+  max-height:58%;
+  overflow-y: auto;
+}
+
+.scrolllist::-webkit-scrollbar {
+  display: none;
+}
+.bottommenu{
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 15%;
+}
+.reportselect{
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+/* Style the supplier table */
+.suppliers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.suppliers-table th, .suppliers-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.suppliers-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.suppliers-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.suppliers-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.suppliers-table td button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.suppliers-table td button:hover {
+    background-color: #0056b3;
+}
+
+.suppliers-table td button.delete {
+    background-color: #dc3545;
+}
+
+.suppliers-table td button.delete:hover {
+    background-color: #c82333;
+}
+
+
+
+
+</style>
+</head>
+<body>
+  
+<div class="background-container">
+  <span id='bars' style="font-size:30px;cursor:pointer;user-select: none;margin-left:15px;" onclick="openNav()">&#9776;&nbsp;&nbsp&nbsp<b>Restaurant ABC</b></span>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" onclick="showMenu()">Dashboard</a>
+  <a href="#" onclick="showOrderReports()">Report</a>
+  <a href="#" onclick="showInventory()">Inventory</a>
+  <a href="#" onclick="showSettings()">Setting</a>
+  <a href="#" onclick="loadSystemManagement()">System Manage</a>
+</div>
+<div id="main">
+  <div id="dash">
+    <div id="left-side">
+      <h2>Menu</h2>
+      <div id="menu"><script>loadMenuItems();</script></div>
+    </div>
+    <div id="right-side">
+      <div class="order-summary">
+        <div class="scrolllist"><ul id="order-list"></ul></div>
+        <div class="bottommenu">
+        <div class="total">Total: Rs.<span id="total">0.00</span></div>
+
+        <div class="cash-input">
+          <label for="cash-given">Cash Rs.</label>
+          <input type="text" id="cashGiven" oninput="calculateChange()" placeholder="Enter cash amount">
+        </div>
+        <div class="change">
+          Change: <span id="change">Rs.0.00</span>
+        </div>
+        <button class="complete-order-btn" onclick="completeOrder()">Complete Order</button>
+        </div>
+      </div>
+      <div class="keypad">
+        <button onclick="enterNumber('1')">1</button>
+        <button onclick="enterNumber('2')">2</button>
+        <button onclick="enterNumber('3')">3</button>
+        <button onclick="enterNumber('4')">4</button>
+        <button onclick="enterNumber('5')">5</button>
+        <button onclick="enterNumber('6')">6</button>
+        <button onclick="enterNumber('7')">7</button>
+        <button onclick="enterNumber('8')">8</button>
+        <button onclick="enterNumber('9')">9</button>
+        <button onclick="enterNumber('0')">0</button>
+        <button onclick="enterNumber('00')">00</button>
+        <button onclick="enterNumber('000')">000</button>
+        <button onclick="clearEntry()">Remove</button>
+        <button onclick="removeLastEntry()">Clear</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  
+    //showMenu();
+    
+    let order = [];
+
+
+    function openNav() {
+        //document.getElementById("bars").style.display = "none";
+         //document.getElementById("brand").style.display = "block";
+         var n=document.getElementById("mySidenav");
+         var m=document.getElementById("main");
+          n.style.width =  (n.style.width != '250px' ? '250px' : '0' );
+          m.style.marginLeft=(m.style.marginLeft != '250px' ? '250px' : '0' );
+        }
+
+    function closeNav() {
+          //document.getElementById("brand").style.display = "none";
+       // document.getElementById("bars").style.display = "block";
+          document.getElementById("mySidenav").style.width = "0";
+          document.getElementById("main").style.marginLeft= "0";
+        };
+
+
+    
+
+    function showMenu() {
+          const mainContent = document.getElementById('main');
+          mainContent.innerHTML = `
+          <div id="dash">
+            <div id="left-side">
+              <h2>Menu</h2>
+              <div id="menu"></div>
+            </div>
+            <div id="right-side">
+              <div class="order-summary">
+                <div class="scrolllist"><ul id="order-list"></ul></div>
+                <div class="bottommenu">
+                <div class="total">Total: Rs.<span id="total">0.00</span></div>
+
+                <div class="cash-input">
+                  <label for="cash-given">Cash Rs.</label>
+                  <input type="text" id="cashGiven" oninput="calculateChange()" placeholder="Enter cash amount">
+                </div>
+                <div class="change">
+                  Change: <span id="change">Rs.0.00</span>
+                </div>
+                <button class="complete-order-btn" onclick="completeOrder()">Complete Order</button>
+                </div>
+              </div>
+              <div class="keypad">
+                <button onclick="enterNumber('1')">1</button>
+                <button onclick="enterNumber('2')">2</button>
+                <button onclick="enterNumber('3')">3</button>
+                <button onclick="enterNumber('4')">4</button>
+                <button onclick="enterNumber('5')">5</button>
+                <button onclick="enterNumber('6')">6</button>
+                <button onclick="enterNumber('7')">7</button>
+                <button onclick="enterNumber('8')">8</button>
+                <button onclick="enterNumber('9')">9</button>
+                <button onclick="enterNumber('0')">0</button>
+                <button onclick="enterNumber('00')">00</button>
+                <button onclick="enterNumber('000')">000</button>
+                <button onclick="clearEntry()">Remove</button>
+                <button onclick="removeLastEntry()">Clear</button>
+              </div>
+            </div>
+          </div>
+
+          `;
+
+          loadMenuItems();
+        }
+
+    let currentInput = '';
+
+
+    function enterNumber(number) {
+          currentInput += number;
+          const inputField = document.getElementById('cashGiven');
+          inputField.value = currentInput;
+          inputField.focus();  // Keep focus on the input field
+        }
+
+    function clearEntry() {
+          currentInput = '';
+          const inputField = document.getElementById('cashGiven');
+          inputField.value = '0';
+          inputField.focus();  // Keep focus on the input field
+        }
+
+    function removeLastEntry() {
+        currentInput = currentInput.slice(0, -1);
+        const inputField = document.getElementById('cashGiven');
+        inputField.value = currentInput || '0.00';
+        inputField.focus();  // Keep focus on the input field
+      }
+
+
+    function calculateChange() {
+    // Get the values from the inputs
+    const total = parseFloat(document.getElementById('total').textContent) || 0;
+    const cashGiven = parseFloat(document.getElementById('cashGiven').value) || 0;
+
+    // Calculate the change
+    const change = cashGiven - total;
+
+    // Update the change input field
+    document.getElementById('change').textContent = change >= 0 ? change.toFixed(2) : 'Insufficient cash';
+}
+
+
+    function showSettings(){
+        const mainContent = document.getElementById('main');
+            mainContent.innerHTML = `
+              <h2>Settings</h2>
+              <div>
+                <label for="sound-toggle">Keypad Sound</label>
+      <input type="checkbox" id="sound-toggle" name="sound-toggle">
+
+              </div>
+            `;
+      }
+
+      function updateChange() {
+    const totalAmount = parseFloat(document.getElementById('total').textContent);
+    const cashGiven = parseFloat(document.getElementById('cashGiven').value);
+    
+    let change = 0;
+
+    if (!isNaN(cashGiven) && cashGiven >= totalAmount) {
+        change = cashGiven - totalAmount;
+    }
+
+    document.getElementById('change').textContent = change.toFixed(2);
+}
+
+    document.getElementById('sound-toggle').addEventListener('change', (event) => {
+          settings.soundEnabled = event.target.checked;
+          saveSettings(settings); // Implement this function to persist settings
+      });
+
+      
+    async function loadMenuItems() {
+            const menuDiv = document.getElementById('menu');
+            menuDiv.innerHTML = '';  // Clear previous items
+
+            const foodItems = await window.api.getFoodItems();
+          
+            const ItemDiv = document.createElement('div');
+            ItemDiv.className = 'menu-grid';
+            
+            foodItems.forEach(item => {
+              const menuItemDiv = document.createElement('div');
+              menuItemDiv.className = 'menu-item';
+              menuItemDiv.textContent = `${item.name} - Rs.${item.price.toFixed(2)}`;
+              
+          menuItemDiv.addEventListener('click', () => addToOrder(item.name, item.price));
+    
+          ItemDiv.appendChild(menuItemDiv);
+        });
+        menuDiv.appendChild(ItemDiv);
+      }
+  
+function addToOrder(name, price) {
+    const orderList = document.getElementById('order-list');
+    let existingItem = document.querySelector(`[data-item-name="${name}"]`);
+
+    if (existingItem) {
+        const quantityInput = existingItem.querySelector('.item-quantity');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    } else {
+        const orderItem = document.createElement('li');
+        orderItem.className = 'order-item';
+        orderItem.setAttribute('data-item-name', name);
+        orderItem.innerHTML = `
+          <span class="item-name">${name}</span>
+          <span class="item-price">Rs.${price.toFixed(2)}</span>
+          <input class="item-quantity" type="text" value="1" min="1">
+          <button class="remove-item-btn" onclick="removeItem(this)">Remove</button>
+        `;
+        orderList.appendChild(orderItem);
+
+        orderItem.querySelector('.item-quantity').addEventListener('input', updateTotal);
+        order.push({ name, price, quantity: 1 });
+    }
+
+    updateTotal(); // Call updateTotal to recalculate the total after adding an item
+}
+
+
+
+function updateTotal() {
+    const orderItems = document.querySelectorAll('.order-item');
+    let total = 0;
+
+    orderItems.forEach(item => {
+        const price = parseFloat(item.querySelector('.item-price').textContent.replace('Rs.', ''));
+        let quantity = parseInt(item.querySelector('.item-quantity').value);
+
+        // Handle NaN cases by setting quantity to 0
+        if (isNaN(quantity) || quantity < 1) {
+            quantity = 0;
+            item.querySelector('.item-quantity').value = ""; // Set input value to 0
+        }
+        total += price * quantity;
+    });
+
+    document.getElementById('total').textContent = total.toFixed(2);
+}
+
+    function updateOrderSummary() {
+        const orderList = document.getElementById('order-list');
+        orderList.innerHTML = '';
+
+        order.forEach((orderItem, index) => {
+          const tr = document.createElement('tr');
+          tr.textContent = `${orderItem.item} - Rs.${orderItem.price.toFixed(2)}`;
+
+          const removeButton = document.createElement('button');
+          removeButton.textContent = 'Remove';
+          removeButton.addEventListener('click', () => removeFromOrder(index));
+          tr.appendChild(removeButton);
+
+          orderList.appendChild(tr);
+        });
+
+        document.getElementById('total').textContent = total.toFixed(2);
+      }
+
+    function removeFromOrder(index) {
+        total -= order[index].price;
+        order.splice(index, 1);
+        updateOrderSummary();
+      }
+
+    
+    async function completeOrder() {
+        // Check if there are items in the order
+        if (order.length === 0) {
+            alert('No items in order!');
+            return;
+        }
+        const cash=document.getElementById('cashGiven');
+        const cashAmount=cash.value;
+        const balanceAmount=document.getElementById('change');
+        const balance=balanceAmount.textContent;
+
+    // Calculate the total price of the order
+    const totalPrice = order.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+
+    // Check if totalPrice is valid
+    if (isNaN(totalPrice) || totalPrice <= 0) {
+        alert('Invalid total price.');
+        return;
+    }
+
+    // Create the orderDetails object
+    const orderDetails = {
+        items: order.map(item => ({
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+        })),
+        totalPrice: totalPrice,
+        cashAmount:cashAmount,
+        balance:balance,
+        date: new Date().toISOString() // Get the current date and time
+    };
+    try {
+        // Send the order details to the backend
+        const result = await window.api.saveOrder(orderDetails);
+        const printresult=await window.api.printOrder(orderDetails);
+        alert(result);
+        alert(printresult);
+    } catch (error) {
+        alert('Failed to save order'+error);
+    }
+
+    // Reset the order
+    order = [];
+    total = 0;
+    cash.value='';
+    balance.textContent='0.00';
+    updateOrderSummary();
+}
+
+      function removeItem(button) {
+        const orderItem = button.parentElement;
+        orderItem.remove();
+        order.pop(orderItem);
+        updateTotal();
+      }
+
+
+      function showInventory(){
+        const mainContent = document.getElementById('main');
+    mainContent.innerHTML = `
+      <h2>Inventory</h2>
+      <button class="sysitem" onclick="showAddSupplier(),showOverlay()">Add Supplier</button>
+      <button class="sysitem" onclick="showAddProducts(),showOverlay()">Add Products</button>
+      <button class="sysitem" onclick="showUpdateFoodItem(),showOverlay()">Update Food Item Price</button>
+      <button class="sysitem"onclick="showRemoveOrder(),showOverlay()">Remove Order</button>
+    <div id="overlay" style="display: none;">
+  <div class="overlay-content" id="overlay-conten">
+    <button class="close-button" id="mainclose" onclick="closeOverlays()">&times;</button>
+    <button class="close-button" id="subclose" onclick="closeSubOverlay()" style="display:none;">&times;</button>
+    <div id="overlaycon"></div>
+    <div id="suboverlaycon"></div>
+  </div>
+</div>
+      `;
+
+      }
+
+      function showOverlay() {
+  document.getElementById("overlay").style.display = "flex";
+}
+
+function closeOverlays() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+function closeSubOverlay() {
+  document.getElementById("subclose").style.display = "none";
+  document.getElementById("suboverlaycon").style.display = "none";
+  document.getElementById("mainclose").style.display = "block";
+  document.getElementById("overlaycon").style.display = "block";
+  
+
+}
+
+
+async function showAddSupplier() {
+    try {
+        const suppliers = await window.api.getSupplier();
+
+        const managementContent = document.getElementById('overlaycon');
+        
+        if (suppliers == null || suppliers.length === 0) {
+            managementContent.innerHTML = `
+                <h4>No Suppliers Available</h4>
+                <button onclick="showaddsup()" class="supplier" style="margin-top:10px;float:right;">Add Supplier</button>
+            `;
+        } else {
+            managementContent.innerHTML = `
+                <h3>Suppliers List</h3>
+                <table id="suppliers-table" class="suppliers-table">
+                    <thead>
+                        <tr>
+                            <th>Supplier Name</th>
+                            <th>Mobile No.</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="suppliers-list">
+                        <!-- Suppliers will be added here dynamically -->
+                    </tbody>
+                </table>
+                <button onclick="showaddsup()" class="supplier" style="margin-top:10px;float:right;">Add Supplier</button>
+            `;
+
+            populateSuppliersTable(suppliers);
+        }
+    } catch (error) {
+        const messageElement = document.getElementById('add-supplier-message');
+        messageElement.textContent = 'Failed to load suppliers.';
+        messageElement.style.color = "red";
+    }
+}
+
+      
+
+function relatedContentHide(){
+ 
+}
+
+function showaddsup(){
+  document.getElementById("overlaycon").style.display = "none";
+  document.getElementById("mainclose").style.display = "none";
+  document.getElementById("subclose").style.display = "block";
+  document.getElementById("suboverlaycon").style.display = "block";
+  const managementContent = document.getElementById('suboverlaycon');
+    managementContent.innerHTML = `
+    <h3>Add Supplier</h3>
+        <form onsubmit="return addSupplier()">
+            <div class="form-group">
+                <label for="new-supplier-name">Supplier Name</label>
+                <input class="sysman" type="text" id="new-supplier-name" required>
+            </div>
+            <div class="form-group">
+                <label for="new-mobile">Mobile No.</label>
+                <input class="sysman" type="text" id="new-mobile" required>
+            </div>
+            <div class="form-group">
+                <label for="new-address">Address</label>
+                <input class="sysman" type="text" id="new-address" required>
+            </div>
+            <span id="add-supplier-message"></span>
+            <button type="submit" style="float:right;" >Add Supplier</button>
+        </form>
+        `;
+
+}
+
+
+
+      async function addSupplier() {
+    const newSupplierNameField = document.getElementById('new-supplier-name');
+    const newMobileField = document.getElementById('new-mobile');
+    const newAddressField = document.getElementById('new-address');
+    const messageElement = document.getElementById('add-supplier-message');
+
+    const newSupplierName = newSupplierNameField.value;
+    const newMobile = newMobileField.value;
+    const newAddress = newAddressField.value;
+
+    if (isNaN(newMobile)) {
+        messageElement.textContent = 'Invalid Mobile Number.';
+        messageElement.style.color = "red";
+        messageElement.style.fontWeight = "Bold";
+    } else {
+        try {
+            const result = await window.api.addSupplier(newSupplierName, newMobile, newAddress);
+            messageElement.textContent = 'Supplier added successfully.';
+            messageElement.style.color = "green";
+        } catch (error) {
+            messageElement.textContent = 'Failed to add Supplier.';
+            messageElement.style.color = "red";
+        }
+        messageElement.style.fontWeight = "Bold";
+
+        // Clear the input fields
+        newSupplierNameField.value = '';
+        newMobileField.value = '';
+        newAddressField.value = '';
+    }
+    // Hide the message after 3 seconds
+    setTimeout(() => {
+        messageElement.textContent = '';
+    }, 2000);
+    showAddSupplier();
+
+    return false;
+}
+
+  
+
+// Function to populate the suppliers table
+function populateSuppliersTable(suppliers) {
+    const suppliersList = document.getElementById('suppliers-list');
+    suppliersList.innerHTML = '';
+
+    suppliers.forEach((supplier, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${supplier.supplier_name}</td>
+            <td>${supplier.mobile_number}</td>
+            <td>${supplier.address}</td>
+            <td>
+                <button class="edit" onclick="editSupplier(${supplier.id})">Edit</button>
+                <button class="delete" onclick="removeSupplier(${supplier.id})">Remove</button>
+            </td>
+        `;
+        suppliersList.appendChild(row);
+    });
+}
+
+
+// Example functions to handle edit and remove actions
+// Function to handle supplier editing
+async function editSupplier(supplierId) {
+  showaddsup();
+    try {
+        const suppliers = await window.api.getSupplier();
+        const supplier = suppliers.find(s => s.id === supplierId);
+
+        if (supplier) {
+          
+            document.getElementById('new-supplier-name').value = supplier.supplier_name;
+            document.getElementById('new-mobile').value = supplier.mobile_number;
+            document.getElementById('new-address').value = supplier.address;
+
+            // Change the form submission to update instead of add
+            const form = document.getElementById('add-supplier-form');
+            form.onsubmit = async (event) => {
+                event.preventDefault();
+                await updateSupplier(supplierId);
+                form.onsubmit = addSupplier;  // Restore the form to add supplier functionality
+            };
+        }
+    } catch (error) {
+        console.error('Failed to load supplier for editing', error);
+    }
+}
+
+// Function to update supplier details
+async function updateSupplier(supplierId) {
+    const newSupplierName = document.getElementById('new-supplier-name').value;
+    const newMobile = document.getElementById('new-mobile').value;
+    const newAddress = document.getElementById('new-address').value;
+    const messageElement = document.getElementById('add-supplier-message');
+
+    if (isNaN(newMobile)) {
+        messageElement.textContent = 'Invalid Mobile Number.';
+        messageElement.style.color = "red";
+        messageElement.style.fontWeight = "Bold";
+    } else {
+        try {
+            const result = await window.api.updateSupplier(supplierId, newSupplierName, newMobile, newAddress);
+            messageElement.textContent = 'Supplier updated successfully.';
+            messageElement.style.color = "green";
+
+            // Reload the suppliers list after updating
+            showAddSupplier();
+
+            // Clear the input fields and restore form behavior
+            document.getElementById('new-supplier-name').value = '';
+            document.getElementById('new-mobile').value = '';
+            document.getElementById('new-address').value = '';
+        } catch (error) {
+            messageElement.textContent = 'Failed to update Supplier.';
+            messageElement.style.color = "red";
+        }
+        messageElement.style.fontWeight = "Bold";
+
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+            messageElement.textContent = '';
+        }, 2000);
+    }
+}
+
+
+// Function to handle supplier removal
+async function removeSupplier(supplierId) {
+    if (confirm('Are you sure you want to remove this supplier?')) {
+        try {
+            const result = await window.api.removeSupplier(supplierId);
+            showAddSupplier(); 
+        } catch (error) {
+            console.error('Failed to remove supplier', error);
+        }
+    }
+}
+
+
+      function showAddProducts(){
+        const managementContent = document.getElementById('overlaycon');
+        managementContent.innerHTML = `
+      <h3>Add Products</h3>
+      <form id="add-product-form" onsubmit="return addProducts()">
+        <div class="form-group">
+          <label for="new-item-name">Supplier Name</label>
+          <select class="sysman" id="new-supplier-name" required></select>
+        </div>
+        <div class="form-group">
+          <label for="new-item-name">Product Category</label>
+          <select class="sysman" id="new-supplier-name" required></select>
+        </div>
+        <div class="form-group">
+          <label for="new-item-price">Product Name</label>
+          <input class="sysman" type="text" id="product-name" step="0.01" required>
+        </div>
+         <div class="form-group">
+          <label for="new-item-price">Product Quantity</label>
+          <input class="sysman" type="text" id="product-count" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label for="new-item-price">Stock Price</label>
+          <input class="sysman" type="text" id="stock-price" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label for="new-item-price">Wholesale Price</label>
+          <input class="sysman" type="text" id="wholesale-price" step="0.01" required>
+        </div>
+         <div class="form-group">
+          <label for="new-item-price">Discount</label>
+          <input class="sysman" type="text" id="discount" step="0.01" required>
+        </div>
+        <span id="add-product-message"></span>
+        <button type="submit" style="float:right;">Add Supplier</button>
+      </form>
+        `;
+
+      }
+
+      async function addProducts(){
+        const newSupplierNameField = document.getElementById('new-supplier-name');
+        const productnameField = document.getElementById('product-name');
+        const productcountField = document.getElementById('product-count');
+        const stockpriceField = document.getElementById('stock-price');
+        const wholesalepriceField = document.getElementById('wholesale-price');
+        const discountField = document.getElementById('discount');
+        const messageElement = document.getElementById('add-product-message');
+
+        const newSupplierName=newSupplierNameField.value;
+        const productname=productnameField.value;
+        const productcount=productcountField.value;
+        const stockprice= stockpriceField.value;
+        const wholesaleprice=wholesalepriceField.value;
+        const discount= sdiscountField.value;
+
+        if (isNaN(productcount) || isNaN(stockprice)|| isNaN (wholesaleprice)||isNaN(discount) ) {
+          messageElement.textContent = 'Invalid Price Value.';
+          messageElement.style.color="red";
+          messageElement.style.fontWeight="Bold";
+         }else{
+
+        try {
+            const result = await window.api.addProduct(newSupplierName, productname, productcount, stockprice, wholesaleprice, discount);
+            messageElement.textContent = 'Product added successfully.';
+            messageElement.style.color="green";
+
+        } catch (error) {
+            messageElement.textContent = 'Failed to add Product.';
+            messageElement.style.color="red";
+        }
+        messageElement.style.fontWeight="Bold";
+
+        // Clear the input fields
+        newSupplierNameField.value = '';
+        newMobileField.value = '';
+        newAddressField.value='';
+      }
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+            messageElement.textContent = '';
+        }, 2000);
+
+        return false;
+        
+      }
+
+
+    async function showOrderReports() {
+        const mainContent = document.getElementById('main');
+        mainContent.innerHTML = `
+          <h2>Order Reports</h2>
+          <div class="reportselect">
+            <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date"><br><br>
+            <label for="end-date">End Date:&nbsp;</label>
+            <input type="date" id="end-date"><br><br>
+            </div>
+            <button onclick="loadFilteredOrders()">Filter</button>
+          
+          <div id="order-report"></div>
+        `;
+      }
+
+    function loadSystemManagement() {
+    const mainContent = document.getElementById('main');
+    mainContent.innerHTML = `
+      <h2>System Management</h2>
+      <button class="sysitem" onclick="showAddFoodItem(),showOverlay()">Add Food Item</button>
+      <button class="sysitem" onclick="showRemoveFoodItem(),showOverlay()">Remove Food Item</button>
+      <button class="sysitem" onclick="showUpdateFoodItem(),showOverlay()">Update Food Item Price</button>
+      <button class="sysitem"onclick="showRemoveOrder(),showOverlay()">Remove Order</button>
+    <div id="overlay" style="display: none;">
+  <div class="overlay-content" id="overlay-conten">
+    <button class="close-button" onclick="closeOverlay()">&times;</button>
+    <div id="overlaycon"></div>
+    
+  </div>
+</div>
+      `;
+  }
+
+  function showOverlay() {
+  document.getElementById("overlay").style.display = "flex";
+}
+
+function closeOverlay() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+    function showAddFoodItem() {
+        const managementContent = document.getElementById('overlaycon');
+        managementContent.innerHTML = `
+      <h3>Add Food Item</h3>
+      <form id="add-food-form" onsubmit="return addFoodItem()">
+        <div class="form-group">
+          <label for="new-item-name">Item Name:</label>
+          <input  class="sysman" type="text" id="new-item-name" required>
+        </div>
+        <div class="form-group">
+          <label for="new-item-price">Price:</label>
+          <input class="sysman" type="text" id="new-item-price" step="0.01" required>
+        </div>
+        <button type="submit">Add Item</button>
+      </form>
+      <div id="add-item-message"></div>
+
+        `;
+      }
+
+      async function addFoodItem() {
+        const nameField = document.getElementById('new-item-name');
+        const priceField = document.getElementById('new-item-price');
+        const messageElement = document.getElementById('add-item-message');
+
+        const name = nameField.value;
+
+        
+
+        const price = parseFloat(priceField.value);
+        if (isNaN(price)) {
+          messageElement.textContent = 'Invalid Price Value.';
+          messageElement.style.color="red";
+          messageElement.style.fontWeight="Bold";
+         }else{
+
+        try {
+            const result = await window.api.addFoodItem(name, price);
+            messageElement.textContent = 'Item added successfully.';
+            messageElement.style.color="green";
+
+        } catch (error) {
+            messageElement.textContent = 'Failed to add item.';
+            messageElement.style.color="red";
+        }
+        messageElement.style.fontWeight="Bold";
+
+        // Clear the input fields
+        nameField.value = '';
+        priceField.value = '';
+      }
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+            messageElement.textContent = '';
+        }, 2000);
+
+        return false;
+      
+    }
+
+
+
+    async function showRemoveFoodItem() {
+        const managementContent = document.getElementById('overlaycon');
+        managementContent.innerHTML = `
+          <h3>Remove Food Item</h3>
+          <form id="add-food-form" onsubmit="return removeFoodItem()">
+            <div class="form-group">
+              <label for="remove-item-select">Select Item:</label>
+              <select class="sysman" id="remove-item-select" required></select>
+            </div> 
+            <button type="submit">Remove Item</button>
+          </form>
+          <div id="remove-item-message" style="color: green;"></div>
+        `;
+
+        // Load available food items into the select dropdown
+        const foodItems = await window.api.getFoodItems();
+        const removeItemSelect = document.getElementById('remove-item-select');
+        
+        foodItems.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item.name;
+          option.textContent = `${item.name} - Rs.${item.price.toFixed(2)}`;
+          removeItemSelect.appendChild(option);
+        });
+      }
+
+
+      async function removeFoodItem() {
+    const nameItem = document.getElementById('remove-item-select');
+    const messageElement = document.getElementById('remove-item-message');
+
+    const name = nameItem.value;
+
+    try {
+        const result = await window.api.removeFoodItem(name);
+        messageElement.textContent = 'Item removed successfully.';
+        
+        // Remove the selected option from the dropdown
+        nameItem.remove(nameItem.selectedIndex);
+    } catch (error) {
+        messageElement.textContent = 'Failed to remove item.';
+    }
+    messageElement.style.fontWeight = "bold";
+
+    setTimeout(() => {
+        messageElement.textContent = '';
+    }, 2000);
+
+    nameItem.value = 'Select Item';
+
+    return false;
+}
+
+
+
+    async function showUpdateFoodItem() {
+        const managementContent = document.getElementById('overlaycon');
+        managementContent.innerHTML = `
+          <h3>Update Food Item Price</h3>
+          <form id="add-food-form" onsubmit="return updateFoodItemPrice()">
+            <div class="form-group">
+            <label for="update-item-name">Item Name:</label>
+            <select class="sysman" id="update-item-select" required></select>
+            </div>
+            <div class="form-group">
+            <label for="update-item-price">New Price:</label>
+            <input type="text" class="sysman" id="update-item-price" step="0.01" required>
+            </div>
+            <button type="submit">Update Price</button>
+          </form>
+          <div id="update-item-message"></div>
+        `;
+
+        const foodItems = await window.api.getFoodItems();
+        const updateItemSelect = document.getElementById('update-item-select');
+
+        foodItems.forEach(item => {
+          const option = document.createElement('option');
+          option.style.marginTop='10px';
+          option.value = item.name;
+          option.textContent = `${item.name} - Rs.${item.price.toFixed(2)}`;
+          updateItemSelect.appendChild(option);
+        });
+      }
+
+    async function updateFoodItemPrice() {
+        const name = document.getElementById('update-item-select').value;
+        const price = parseFloat(document.getElementById('update-item-price').value);
+
+        const messageElement = document.getElementById('update-item-message');
+        if(isNaN(price)){
+          messageElement.textContent = 'Invalid Price Value.';
+          messageElement.style.color="red";
+          messageElement.style.fontWeight="Bold";
+        }else{
+
+        try {
+          const result = await window.api.updateFoodItemPrice(name, price);
+          messageElement.textContent = 'Price updated successfully.';
+          messageElement.style.color="green";
+        } catch (error) {
+          messageElement.textContent = 'Failed to update price.';
+          messageElement.style.color="red";
+        }
+        messageElement.style.fontWeight="bold";
+      }
+        setTimeout(() => {
+            messageElement.textContent = '';
+        }, 2000);
+
+        return false;
+      }
+
+    function showRemoveOrder() {
+        const managementContent = document.getElementById('overlaycon');
+        managementContent.innerHTML = `
+          <h3>Remove Order</h3>
+          <form id="add-food-form" onsubmit="return removeOrder()">
+            <div class="form-group">
+            <label for="remove-order-id">Order ID:</label>
+            <input type="number" class="sysman" id="remove-order-id" required>
+            </div>
+            <button type="submit">Remove Order</button>
+          </form>
+          <div id="remove-order-message" style="color: green;"></div>
+        `;
+      }
+
+    async function removeOrder() {
+        const orderId = parseInt(document.getElementById('remove-order-id').value);
+
+        const messageElement = document.getElementById('remove-order-message');
+
+        try {
+          const result = await window.api.removeOrder(orderId);
+          if (result) {
+            messageElement.textContent = 'Order removed successfully!';
+          } else {
+            messageElement.textContent = 'Order ID not found.';
+          }
+        } catch (error) {
+          messageElement.textContent = 'Failed to remove order.';
+        }
+        messageElement.style.fontWeight="bold";
+
+        setTimeout(() => {
+            messageElement.textContent = '';
+        }, 2000);
+
+        return false;  // Prevent form submission
+      }
+
+</script>
+</body>
+</html> 
