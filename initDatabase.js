@@ -44,9 +44,10 @@ db.serialize(() => {
     category_name TEXT NOT NULL,
     product_name TEXT NOT NULL,
     quantity INTEGER NOT NULL,
-    stock_price REAL NOT NULL,
+    retail_price REAL NOT NULL,
     wholesale_price REAL NOT NULL,
-    discount REAL NOT NULL
+    discount REAL NOT NULL,
+    custom_id TEXT
   )`);
 
   // Insert sample data

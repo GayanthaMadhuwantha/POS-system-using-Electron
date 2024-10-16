@@ -26,12 +26,12 @@ body::-webkit-scrollbar{
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('steptodown.com914449.jpg');
+  background-image: url('jjOf9cbx43.jpg');
   background-size: cover;
-  background-position:top;
-  filter: blur(2px) brightness(0.93); /* Example filters */
+  filter: brightness(0.93); /* Example filters */
   z-index: -1; /* Ensure the pseudo-element is behind the content */
   opacity: 0.8;
+  background-color:transparent;
 }
 
 
@@ -155,6 +155,7 @@ select:focus {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  
 }
 .overlay-content {
   position: relative;
@@ -163,7 +164,7 @@ select:focus {
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 10px;
-  min-width: 400px;
+  width:50%;
 }
 .close-button {
   position: absolute;
@@ -274,7 +275,9 @@ label{
   font-size: 1.4em;
 
 }
-
+select{
+width:410px;
+}
 .cash-input input{
   border-radius: 50px;
   padding: 10px 20px;
@@ -298,7 +301,7 @@ input:focus{
 .complete-order-btn {
   margin-top: 20px;
   padding: 13px;
-  width: 100%;
+  width: 70%;
   background-color: #000000;
   color: rgb(255, 255, 255);
   border: none;
@@ -306,6 +309,12 @@ input:focus{
   font-size: 1.2em;
   cursor: pointer;
   font-weight: bold;
+  margin-left: 15%;
+}
+.complete-order-btn:focus {
+  background-color: #474747;
+  border: none;
+
 }
 .sysman:focus,select:focus{
   border: 2px solid rgb(0, 0, 0);
@@ -427,7 +436,83 @@ input:focus{
     background-color: #c82333;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
+.pos-container {
+    display: flex;
+    padding: 20px;
+}
+
+.product-section, .checkout-section {
+    width: 50%;
+    padding: 16px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.virtual-keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.virtual-keyboard button {
+    padding: 15px;
+    font-size: 18px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    width: 20%;
+}
+
+.virtual-keyboard button:hover {
+    background-color: #0056b3;
+}
+.removebutton{
+  background-color: #dc3545;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 5px 15px;
+}
+#inputvalue{
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: none;
+  font-weight: bold;
+  text-align: center;
+  width: 100px;
+}
 
 
 </style>
@@ -445,56 +530,14 @@ input:focus{
   <a href="#" onclick="loadSystemManagement()">System Manage</a>
 </div>
 <div id="main">
-  <div id="dash">
-    <div id="left-side">
-      <h2>Menu</h2>
-      <div id="menu"><script>loadMenuItems();</script></div>
-    </div>
-    <div id="right-side">
-      <div class="order-summary">
-        <div class="scrolllist"><ul id="order-list"></ul></div>
-        <div class="bottommenu">
-        <div class="total">Total: Rs.<span id="total">0.00</span></div>
+          
+          <script>
+showMenu();
+  let order = [];
+  let total = 0;
+  let items = [];
 
-        <div class="cash-input">
-          <label for="cash-given">Cash Rs.</label>
-          <input type="text" id="cashGiven" oninput="calculateChange()" placeholder="Enter cash amount">
-        </div>
-        <div class="change">
-          Change: <span id="change">Rs.0.00</span>
-        </div>
-        <button class="complete-order-btn" onclick="completeOrder()">Complete Order</button>
-        </div>
-      </div>
-      <div class="keypad">
-        <button onclick="enterNumber('1')">1</button>
-        <button onclick="enterNumber('2')">2</button>
-        <button onclick="enterNumber('3')">3</button>
-        <button onclick="enterNumber('4')">4</button>
-        <button onclick="enterNumber('5')">5</button>
-        <button onclick="enterNumber('6')">6</button>
-        <button onclick="enterNumber('7')">7</button>
-        <button onclick="enterNumber('8')">8</button>
-        <button onclick="enterNumber('9')">9</button>
-        <button onclick="enterNumber('0')">0</button>
-        <button onclick="enterNumber('00')">00</button>
-        <button onclick="enterNumber('000')">000</button>
-        <button onclick="clearEntry()">Remove</button>
-        <button onclick="removeLastEntry()">Clear</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<script>
-  
-    //showMenu();
-    
-    let order = [];
-
-
-    function openNav() {
+  function openNav() {
         //document.getElementById("bars").style.display = "none";
          //document.getElementById("brand").style.display = "block";
          var n=document.getElementById("mySidenav");
@@ -510,96 +553,249 @@ input:focus{
           document.getElementById("main").style.marginLeft= "0";
         };
 
-
-    
-
-    function showMenu() {
-          const mainContent = document.getElementById('main');
-          mainContent.innerHTML = `
-          <div id="dash">
-            <div id="left-side">
-              <h2>Menu</h2>
-              <div id="menu"></div>
-            </div>
-            <div id="right-side">
-              <div class="order-summary">
-                <div class="scrolllist"><ul id="order-list"></ul></div>
-                <div class="bottommenu">
-                <div class="total">Total: Rs.<span id="total">0.00</span></div>
-
-                <div class="cash-input">
-                  <label for="cash-given">Cash Rs.</label>
-                  <input type="text" id="cashGiven" oninput="calculateChange()" placeholder="Enter cash amount">
-                </div>
-                <div class="change">
-                  Change: <span id="change">Rs.0.00</span>
-                </div>
-                <button class="complete-order-btn" onclick="completeOrder()">Complete Order</button>
-                </div>
+        function showMenu(){
+        const mainContent = document.getElementById('main');
+            mainContent.innerHTML = `
+            <div class="pos-container">
+                      <div class="product-section" >
+                  <h2>Product List</h2>
+                  <div id="logo"><h1 style="color:green; text-align:center;margin-top:25%;">ABC Hardware</h1></div>
+                  <table id="productTable" style="display:none;">
+                      <thead i>
+                          <tr >
+                              <th>Product ID</th>
+                              <th>Name</th>
+                              <th>Quantity</th>
+                              <th>Unit Price</th>
+                              <th>Action</th>
+                          </tr>
+                      </thead>
+                      <tbody id="productBody">
+                          <!-- Products will be dynamically added here -->
+                      </tbody>
+                  </table>
               </div>
-              <div class="keypad">
-                <button onclick="enterNumber('1')">1</button>
-                <button onclick="enterNumber('2')">2</button>
-                <button onclick="enterNumber('3')">3</button>
-                <button onclick="enterNumber('4')">4</button>
-                <button onclick="enterNumber('5')">5</button>
-                <button onclick="enterNumber('6')">6</button>
-                <button onclick="enterNumber('7')">7</button>
-                <button onclick="enterNumber('8')">8</button>
-                <button onclick="enterNumber('9')">9</button>
-                <button onclick="enterNumber('0')">0</button>
-                <button onclick="enterNumber('00')">00</button>
-                <button onclick="enterNumber('000')">000</button>
-                <button onclick="clearEntry()">Remove</button>
-                <button onclick="removeLastEntry()">Clear</button>
+              <div class="checkout-section">
+                  <div>
+                      <h2>Enter Product ID or Cash Amount</h2>
+                      <input type="text" id="inputField" autofocus style="width:95%;border:2px solid #9bddff;outline:1px solid #1e90ff; border-radius:15px;">
+                  </div>
+                  <div>
+                      <h2>Total: Rs.<span id="totalAmount">0.00</span></h2>
+                  </div>
+                  <div>
+                      <h2>Customer Payment: RS.<span id="customerPayment">0.00</span></h2>
+                  </div>
+                  <div>
+                      <h2>Balance: Rs.<span id="balance">0.00</span></h2>
+                  </div>
+                  
+                      <div class="virtual-keyboard">
+                          <button onclick="pressKey('1')">1</button>
+                          <button onclick="pressKey('2')">2</button>
+                          <button onclick="pressKey('3')">3</button>
+                          <button onclick="pressKey('4')">4</button>
+                          <button onclick="pressKey('5')">5</button>
+                          <button onclick="pressKey('6')">6</button>
+                          <button onclick="pressKey('7')">7</button>
+                          <button onclick="pressKey('8')">8</button>
+                          <button onclick="pressKey('9')">9</button>
+                          <button onclick="pressKey('0')">0</button>
+                          <button onclick="pressKey('00')">00</button>
+                          <button onclick="pressKey('000')">000</button>
+                          <button onclick="pressLetter('p')">p</button>
+                          <button onclick="clearInput()">Clear</button>
+                          <button onclick="submitInput()">Enter</button>
+                          <button onclick="backspace()"><b>&larr;</b></button>
+          
+                      </div>
+                      <input type="button" value="Complete Order" onclick="completeOrder()" class="complete-order-btn">
               </div>
-            </div>
           </div>
-
-          `;
-
-          loadMenuItems();
-        }
-
-    let currentInput = '';
-
-
-    function enterNumber(number) {
-          currentInput += number;
-          const inputField = document.getElementById('cashGiven');
-          inputField.value = currentInput;
-          inputField.focus();  // Keep focus on the input field
-        }
-
-    function clearEntry() {
-          currentInput = '';
-          const inputField = document.getElementById('cashGiven');
-          inputField.value = '0';
-          inputField.focus();  // Keep focus on the input field
-        }
-
-    function removeLastEntry() {
-        currentInput = currentInput.slice(0, -1);
-        const inputField = document.getElementById('cashGiven');
-        inputField.value = currentInput || '0.00';
-        inputField.focus();  // Keep focus on the input field
+            `;
       }
 
+  document.addEventListener('DOMContentLoaded', async () => {
+    const inputField = document.getElementById('inputField');
+    inputField.focus();
 
-    function calculateChange() {
-    // Get the values from the inputs
-    const total = parseFloat(document.getElementById('total').textContent) || 0;
-    const cashGiven = parseFloat(document.getElementById('cashGiven').value) || 0;
+    inputField.addEventListener('keydown', async (event) => {
+    if (event.key === 'Enter') {
+      await submitInput();
+    }
+  });
 
-    // Calculate the change
-    const change = cashGiven - total;
+    try {
+        items = await window.api.getItems();// Check the items structure
+    } catch (error) {
+        alert('Failed to load items: ' + error.message);
+    }
+});
 
-    // Update the change input field
-    document.getElementById('change').textContent = change >= 0 ? change.toFixed(2) : 'Insufficient cash';
+function updateTotal() {
+    total = order.reduce((sum, item) => sum + (item.retail_price * item.quantity), 0);
+    document.getElementById('totalAmount').textContent = total.toFixed(2);
+}
+
+function updateOrderSummary() {
+  if (order.length === 0) {
+    document.getElementById('productTable').style.display="none";
+  document.getElementById('logo').style.display="block";
+  }
+  else{
+    document.getElementById('logo').style.display="none";
+    document.getElementById('productTable').style.display="block";
+  }
+    const productBody = document.getElementById('productBody');
+    productBody.innerHTML = '';
+   
+
+    order.forEach((orderItem, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td style="font-weight:bold;">${orderItem.custom_id}</td>
+            <td style="font-weight:bold;">${orderItem.product_name}</td>
+            <td><input type="number" value="${orderItem.quantity}" min="0" onchange="updateItemQuantity(${index}, this.value)" id="inputvalue"></td>
+            <td style="font-weight:bold;">Rs.${orderItem.retail_price.toFixed(2)}</td>
+            <td ><button onclick="removeFromOrder(${index})" class="removebutton">Remove</button></td>
+        `;
+        productBody.appendChild(tr);
+        
+    });
+
+    updateTotal();
+}
+
+function updateItemQuantity(index, quantity) {
+    const validQuantity = parseInt(quantity) || 0;
+    order[index].quantity = validQuantity;
+    updateTotal();
+}
+
+function removeFromOrder(index) {
+    order.splice(index, 1);
+    updateOrderSummary();
+}
+
+function pressKey(key) {
+    const inputField = document.getElementById('inputField');
+    inputField.value += key;
+    inputField.focus();
+}
+
+function pressLetter(letter){
+  const inputField = document.getElementById('inputField');
+    inputField.value= letter;
+    inputField.focus();
+}
+
+function clearInput() {
+    const inputField = document.getElementById('inputField');
+    inputField.value = '';
+    inputField.focus();
+}
+
+function backspace() {
+    const inputField = document.getElementById('inputField');
+    inputField.value = inputField.value.slice(0, -1);
+    inputField.focus();
+}
+
+async function submitInput() {
+    const inputField = document.getElementById('inputField');
+    const inputValue = inputField.value.trim();
+
+    if (inputValue) {
+        if (isNaN(inputValue)) {
+            // Handle product ID
+            await addProductToOrder(inputValue);
+        } else {
+            // Handle cash amount
+            processCashAmount(parseFloat(inputValue));
+        }
+        clearInput();
+    }
+}
+
+async function addProductToOrder(productId) {
+  
+    const product = items.find(item => item.custom_id.toLowerCase() === productId.toLowerCase());
+    
+    if (product) {
+      
+        const existingProductIndex = order.findIndex(item => item.custom_id.toLowerCase() === productId.toLowerCase());
+        if (existingProductIndex > -1) {
+            order[existingProductIndex].quantity += 1;
+        } else {
+          
+            order.push({...product, quantity: 1});
+        }
+        
+        updateOrderSummary();
+    } else {
+       
+    }
 }
 
 
-    function showSettings(){
+
+function processCashAmount(cashAmount) {
+    if (isNaN(cashAmount) || cashAmount < 0) {
+        alert('Invalid cash amount.');
+        return;
+    }
+    const balance = cashAmount - total;
+    document.getElementById('customerPayment').textContent = cashAmount.toFixed(2);
+    document.getElementById('balance').textContent = balance.toFixed(2);
+}
+
+async function completeOrder() {
+    if (order.length === 0) {
+        alert('No items in order!');
+        return;
+    }
+
+    const cashAmount = parseFloat(document.getElementById('customerPayment').textContent) || 0;
+    const balanceAmount = parseFloat(document.getElementById('balance').textContent) || 0;
+
+    const totalPrice = total;
+
+    if (isNaN(totalPrice) || totalPrice <= 0) {
+        alert('Invalid total price.');
+        return;
+    }
+
+    const orderDetails = {
+        items: order.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+        })),
+        totalPrice: totalPrice,
+        cashAmount: cashAmount,
+        balance: balanceAmount,
+        date: new Date().toISOString()
+    };
+
+    try {
+        const result = await window.api.saveOrder(orderDetails);
+        const printResult = await window.api.printOrder(orderDetails);
+        alert('Order saved and printed successfully.');
+    } catch (error) {
+        alert('Failed to save order: ' + error.message);
+    }
+
+    order = [];
+    total = 0;
+    clearInput();
+    document.getElementById('customerPayment').textContent = '0.00';
+    document.getElementById('balance').textContent = '0.00';
+    updateOrderSummary();
+
+}
+
+function showSettings(){
         const mainContent = document.getElementById('main');
             mainContent.innerHTML = `
               <h2>Settings</h2>
@@ -610,178 +806,6 @@ input:focus{
               </div>
             `;
       }
-
-      function updateChange() {
-    const totalAmount = parseFloat(document.getElementById('total').textContent);
-    const cashGiven = parseFloat(document.getElementById('cashGiven').value);
-    
-    let change = 0;
-
-    if (!isNaN(cashGiven) && cashGiven >= totalAmount) {
-        change = cashGiven - totalAmount;
-    }
-
-    document.getElementById('change').textContent = change.toFixed(2);
-}
-
-    document.getElementById('sound-toggle').addEventListener('change', (event) => {
-          settings.soundEnabled = event.target.checked;
-          saveSettings(settings); // Implement this function to persist settings
-      });
-
-      
-    async function loadMenuItems() {
-            const menuDiv = document.getElementById('menu');
-            menuDiv.innerHTML = '';  // Clear previous items
-
-            const foodItems = await window.api.getFoodItems();
-          
-            const ItemDiv = document.createElement('div');
-            ItemDiv.className = 'menu-grid';
-            
-            foodItems.forEach(item => {
-              const menuItemDiv = document.createElement('div');
-              menuItemDiv.className = 'menu-item';
-              menuItemDiv.textContent = `${item.name} - Rs.${item.price.toFixed(2)}`;
-              
-          menuItemDiv.addEventListener('click', () => addToOrder(item.name, item.price));
-    
-          ItemDiv.appendChild(menuItemDiv);
-        });
-        menuDiv.appendChild(ItemDiv);
-      }
-  
-function addToOrder(name, price) {
-    const orderList = document.getElementById('order-list');
-    let existingItem = document.querySelector(`[data-item-name="${name}"]`);
-
-    if (existingItem) {
-        const quantityInput = existingItem.querySelector('.item-quantity');
-        quantityInput.value = parseInt(quantityInput.value) + 1;
-    } else {
-        const orderItem = document.createElement('li');
-        orderItem.className = 'order-item';
-        orderItem.setAttribute('data-item-name', name);
-        orderItem.innerHTML = `
-          <span class="item-name">${name}</span>
-          <span class="item-price">Rs.${price.toFixed(2)}</span>
-          <input class="item-quantity" type="text" value="1" min="1">
-          <button class="remove-item-btn" onclick="removeItem(this)">Remove</button>
-        `;
-        orderList.appendChild(orderItem);
-
-        orderItem.querySelector('.item-quantity').addEventListener('input', updateTotal);
-        order.push({ name, price, quantity: 1 });
-    }
-
-    updateTotal(); // Call updateTotal to recalculate the total after adding an item
-}
-
-
-
-function updateTotal() {
-    const orderItems = document.querySelectorAll('.order-item');
-    let total = 0;
-
-    orderItems.forEach(item => {
-        const price = parseFloat(item.querySelector('.item-price').textContent.replace('Rs.', ''));
-        let quantity = parseInt(item.querySelector('.item-quantity').value);
-
-        // Handle NaN cases by setting quantity to 0
-        if (isNaN(quantity) || quantity < 1) {
-            quantity = 0;
-            item.querySelector('.item-quantity').value = ""; // Set input value to 0
-        }
-        total += price * quantity;
-    });
-
-    document.getElementById('total').textContent = total.toFixed(2);
-}
-
-    function updateOrderSummary() {
-        const orderList = document.getElementById('order-list');
-        orderList.innerHTML = '';
-
-        order.forEach((orderItem, index) => {
-          const tr = document.createElement('tr');
-          tr.textContent = `${orderItem.item} - Rs.${orderItem.price.toFixed(2)}`;
-
-          const removeButton = document.createElement('button');
-          removeButton.textContent = 'Remove';
-          removeButton.addEventListener('click', () => removeFromOrder(index));
-          tr.appendChild(removeButton);
-
-          orderList.appendChild(tr);
-        });
-
-        document.getElementById('total').textContent = total.toFixed(2);
-      }
-
-    function removeFromOrder(index) {
-        total -= order[index].price;
-        order.splice(index, 1);
-        updateOrderSummary();
-      }
-
-    
-    async function completeOrder() {
-        // Check if there are items in the order
-        if (order.length === 0) {
-            alert('No items in order!');
-            return;
-        }
-        const cash=document.getElementById('cashGiven');
-        const cashAmount=cash.value;
-        const balanceAmount=document.getElementById('change');
-        const balance=balanceAmount.textContent;
-
-    // Calculate the total price of the order
-    const totalPrice = order.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
-
-    // Check if totalPrice is valid
-    if (isNaN(totalPrice) || totalPrice <= 0) {
-        alert('Invalid total price.');
-        return;
-    }
-
-    // Create the orderDetails object
-    const orderDetails = {
-        items: order.map(item => ({
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity
-        })),
-        totalPrice: totalPrice,
-        cashAmount:cashAmount,
-        balance:balance,
-        date: new Date().toISOString() // Get the current date and time
-    };
-    try {
-        // Send the order details to the backend
-        const result = await window.api.saveOrder(orderDetails);
-        const printresult=await window.api.printOrder(orderDetails);
-        alert(result);
-        alert(printresult);
-    } catch (error) {
-        alert('Failed to save order'+error);
-    }
-
-    // Reset the order
-    order = [];
-    total = 0;
-    cash.value='';
-    balance.textContent='0.00';
-    updateOrderSummary();
-}
-
-      function removeItem(button) {
-        const orderItem = button.parentElement;
-        orderItem.remove();
-        order.pop(orderItem);
-        updateTotal();
-      }
-
 
       function showInventory(){
         const mainContent = document.getElementById('main');
@@ -858,12 +882,6 @@ async function showAddSupplier() {
         messageElement.textContent = 'Failed to load suppliers.';
         messageElement.style.color = "red";
     }
-}
-
-      
-
-function relatedContentHide(){
- 
 }
 
 function showaddsup(){
@@ -1043,11 +1061,11 @@ async function removeSupplier(supplierId) {
       <form id="add-product-form" onsubmit="return addProducts()">
         <div class="form-group">
           <label for="new-item-name">Supplier Name</label>
-          <select class="sysman" id="new-supplier-name" required></select>
+          <select class="sysman"  style="width:700px;" id="new-supplier-name" required></select>
         </div>
         <div class="form-group">
           <label for="new-item-name">Product Category</label>
-          <select class="sysman" id="new-supplier-name" required></select>
+          <select class="sysman"   style="width:700px; " id="new-supplier-name" required></select>
         </div>
         <div class="form-group">
           <label for="new-item-price">Product Name</label>
@@ -1140,246 +1158,8 @@ async function removeSupplier(supplierId) {
         `;
       }
 
-    function loadSystemManagement() {
-    const mainContent = document.getElementById('main');
-    mainContent.innerHTML = `
-      <h2>System Management</h2>
-      <button class="sysitem" onclick="showAddFoodItem(),showOverlay()">Add Food Item</button>
-      <button class="sysitem" onclick="showRemoveFoodItem(),showOverlay()">Remove Food Item</button>
-      <button class="sysitem" onclick="showUpdateFoodItem(),showOverlay()">Update Food Item Price</button>
-      <button class="sysitem"onclick="showRemoveOrder(),showOverlay()">Remove Order</button>
-    <div id="overlay" style="display: none;">
-  <div class="overlay-content" id="overlay-conten">
-    <button class="close-button" onclick="closeOverlay()">&times;</button>
-    <div id="overlaycon"></div>
-    
-  </div>
-</div>
-      `;
-  }
 
-  function showOverlay() {
-  document.getElementById("overlay").style.display = "flex";
-}
-
-function closeOverlay() {
-  document.getElementById("overlay").style.display = "none";
-}
-
-    function showAddFoodItem() {
-        const managementContent = document.getElementById('overlaycon');
-        managementContent.innerHTML = `
-      <h3>Add Food Item</h3>
-      <form id="add-food-form" onsubmit="return addFoodItem()">
-        <div class="form-group">
-          <label for="new-item-name">Item Name:</label>
-          <input  class="sysman" type="text" id="new-item-name" required>
-        </div>
-        <div class="form-group">
-          <label for="new-item-price">Price:</label>
-          <input class="sysman" type="text" id="new-item-price" step="0.01" required>
-        </div>
-        <button type="submit">Add Item</button>
-      </form>
-      <div id="add-item-message"></div>
-
-        `;
-      }
-
-      async function addFoodItem() {
-        const nameField = document.getElementById('new-item-name');
-        const priceField = document.getElementById('new-item-price');
-        const messageElement = document.getElementById('add-item-message');
-
-        const name = nameField.value;
-
-        
-
-        const price = parseFloat(priceField.value);
-        if (isNaN(price)) {
-          messageElement.textContent = 'Invalid Price Value.';
-          messageElement.style.color="red";
-          messageElement.style.fontWeight="Bold";
-         }else{
-
-        try {
-            const result = await window.api.addFoodItem(name, price);
-            messageElement.textContent = 'Item added successfully.';
-            messageElement.style.color="green";
-
-        } catch (error) {
-            messageElement.textContent = 'Failed to add item.';
-            messageElement.style.color="red";
-        }
-        messageElement.style.fontWeight="Bold";
-
-        // Clear the input fields
-        nameField.value = '';
-        priceField.value = '';
-      }
-        // Hide the message after 3 seconds
-        setTimeout(() => {
-            messageElement.textContent = '';
-        }, 2000);
-
-        return false;
+          </script>
+      </body>
+      </html>
       
-    }
-
-
-
-    async function showRemoveFoodItem() {
-        const managementContent = document.getElementById('overlaycon');
-        managementContent.innerHTML = `
-          <h3>Remove Food Item</h3>
-          <form id="add-food-form" onsubmit="return removeFoodItem()">
-            <div class="form-group">
-              <label for="remove-item-select">Select Item:</label>
-              <select class="sysman" id="remove-item-select" required></select>
-            </div> 
-            <button type="submit">Remove Item</button>
-          </form>
-          <div id="remove-item-message" style="color: green;"></div>
-        `;
-
-        // Load available food items into the select dropdown
-        const foodItems = await window.api.getFoodItems();
-        const removeItemSelect = document.getElementById('remove-item-select');
-        
-        foodItems.forEach(item => {
-          const option = document.createElement('option');
-          option.value = item.name;
-          option.textContent = `${item.name} - Rs.${item.price.toFixed(2)}`;
-          removeItemSelect.appendChild(option);
-        });
-      }
-
-
-      async function removeFoodItem() {
-    const nameItem = document.getElementById('remove-item-select');
-    const messageElement = document.getElementById('remove-item-message');
-
-    const name = nameItem.value;
-
-    try {
-        const result = await window.api.removeFoodItem(name);
-        messageElement.textContent = 'Item removed successfully.';
-        
-        // Remove the selected option from the dropdown
-        nameItem.remove(nameItem.selectedIndex);
-    } catch (error) {
-        messageElement.textContent = 'Failed to remove item.';
-    }
-    messageElement.style.fontWeight = "bold";
-
-    setTimeout(() => {
-        messageElement.textContent = '';
-    }, 2000);
-
-    nameItem.value = 'Select Item';
-
-    return false;
-}
-
-
-
-    async function showUpdateFoodItem() {
-        const managementContent = document.getElementById('overlaycon');
-        managementContent.innerHTML = `
-          <h3>Update Food Item Price</h3>
-          <form id="add-food-form" onsubmit="return updateFoodItemPrice()">
-            <div class="form-group">
-            <label for="update-item-name">Item Name:</label>
-            <select class="sysman" id="update-item-select" required></select>
-            </div>
-            <div class="form-group">
-            <label for="update-item-price">New Price:</label>
-            <input type="text" class="sysman" id="update-item-price" step="0.01" required>
-            </div>
-            <button type="submit">Update Price</button>
-          </form>
-          <div id="update-item-message"></div>
-        `;
-
-        const foodItems = await window.api.getFoodItems();
-        const updateItemSelect = document.getElementById('update-item-select');
-
-        foodItems.forEach(item => {
-          const option = document.createElement('option');
-          option.style.marginTop='10px';
-          option.value = item.name;
-          option.textContent = `${item.name} - Rs.${item.price.toFixed(2)}`;
-          updateItemSelect.appendChild(option);
-        });
-      }
-
-    async function updateFoodItemPrice() {
-        const name = document.getElementById('update-item-select').value;
-        const price = parseFloat(document.getElementById('update-item-price').value);
-
-        const messageElement = document.getElementById('update-item-message');
-        if(isNaN(price)){
-          messageElement.textContent = 'Invalid Price Value.';
-          messageElement.style.color="red";
-          messageElement.style.fontWeight="Bold";
-        }else{
-
-        try {
-          const result = await window.api.updateFoodItemPrice(name, price);
-          messageElement.textContent = 'Price updated successfully.';
-          messageElement.style.color="green";
-        } catch (error) {
-          messageElement.textContent = 'Failed to update price.';
-          messageElement.style.color="red";
-        }
-        messageElement.style.fontWeight="bold";
-      }
-        setTimeout(() => {
-            messageElement.textContent = '';
-        }, 2000);
-
-        return false;
-      }
-
-    function showRemoveOrder() {
-        const managementContent = document.getElementById('overlaycon');
-        managementContent.innerHTML = `
-          <h3>Remove Order</h3>
-          <form id="add-food-form" onsubmit="return removeOrder()">
-            <div class="form-group">
-            <label for="remove-order-id">Order ID:</label>
-            <input type="number" class="sysman" id="remove-order-id" required>
-            </div>
-            <button type="submit">Remove Order</button>
-          </form>
-          <div id="remove-order-message" style="color: green;"></div>
-        `;
-      }
-
-    async function removeOrder() {
-        const orderId = parseInt(document.getElementById('remove-order-id').value);
-
-        const messageElement = document.getElementById('remove-order-message');
-
-        try {
-          const result = await window.api.removeOrder(orderId);
-          if (result) {
-            messageElement.textContent = 'Order removed successfully!';
-          } else {
-            messageElement.textContent = 'Order ID not found.';
-          }
-        } catch (error) {
-          messageElement.textContent = 'Failed to remove order.';
-        }
-        messageElement.style.fontWeight="bold";
-
-        setTimeout(() => {
-            messageElement.textContent = '';
-        }, 2000);
-
-        return false;  // Prevent form submission
-      }
-
-</script>
-</body>
-</html> 

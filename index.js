@@ -34,9 +34,9 @@ app.whenReady().then(() => {
   createWindow();
 });
 
-ipcMain.handle('get-food-items', async () => {
+ipcMain.handle('get-items', async () => {
   return new Promise((resolve, reject) => {
-    db.all(`SELECT name, price FROM food_items`, [], (err, rows) => {
+    db.all(`SELECT * FROM products`, [], (err, rows) => {
       if (err) {
         reject(err);
       } else {

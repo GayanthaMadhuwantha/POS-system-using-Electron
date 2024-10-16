@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('api', {
   // Fetch all food items
-  getFoodItems: () => ipcRenderer.invoke('get-food-items'),
+  getItems: () => ipcRenderer.invoke('get-items'),
 
   // Save an order
   saveOrder: (orderDetails) => ipcRenderer.invoke('save-order', orderDetails),
